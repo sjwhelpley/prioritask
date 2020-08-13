@@ -11,18 +11,18 @@ export default function Today() {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-      let mounted = true;
-      var today = formatTodayDate();
+        let mounted = true;
+        var today = formatTodayDate();
 
-      TaskDataService.getDueToday(today)
-        .then(res => {
-            if(mounted) {
-              setTasks(res.data);
-            }
-        })
-        .catch(e => {
-            console.log(e);
-        });
+        TaskDataService.getDueToday(today)
+            .then(res => {
+                if (mounted) {
+                    setTasks(res.data);
+                }
+            })
+            .catch(e => {
+                console.log(e);
+            });
     });
 
     const refreshTasks = () => {
@@ -30,39 +30,42 @@ export default function Today() {
     };
 
     const formatTodayDate = () => {
-      var date = new Date();
-      return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getUTCDate();
+        var date = new Date();
+        return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getUTCDate();
     }
 
     const retrieveTasks = () => {
-      var today = formatTodayDate();
+        var today = formatTodayDate();
 
-      TaskDataService.getDueToday(today)
-          .then(res => {
-              setTasks(res.data);
-          })
-          .catch(e => {
-              console.log(e);
-          });
+        TaskDataService.getDueToday(today)
+            .then(res => {
+                setTasks(res.data);
+            })
+            .catch(e => {
+                console.log(e);
+            });
     };
-    
-    const taskList = tasks.map(task => (
+
+    const activeTasks = tasks.filter(task => {
+        return task.completed === false;
+    });
+
+    const taskList = activeTasks.map(task => (
         <div key={task._id}>
             <Task
-              id={task._id}
-              refreshTasks={refreshTasks}
+                id={task._id}
+                refreshTasks={refreshTasks}
             />
             <Divider />
         </div>
-      )
-    );
+    ));
 
     return (
         <div className="container">
             <NavBar title="Today" />
             <AddTask refreshTasks={refreshTasks} />
             <List>
-                {taskList}  
+                {taskList}
             </List>
         </div>
     )

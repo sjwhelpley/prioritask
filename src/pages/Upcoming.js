@@ -46,8 +46,12 @@ export default function Upcoming() {
                 console.log(e);
             });
     };
+
+    const activeTasks = tasks.filter(task => {
+        return task.completed === false;
+    });
     
-    const taskList = tasks.map(task => (
+    const taskList = activeTasks.map(task => (
         <div key={task._id}>
             <Task
                 id={task._id}

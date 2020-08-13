@@ -24,9 +24,9 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <Switch className="switch">
-        <Route exact path="/" component={AllTasks} />
-        <Route path="/today" component={Today} />
+        <Route exact path="/" component={Today} />
         <Route path="/upcoming" component={Upcoming} />
+        <Route path="/all" component={AllTasks} />
       </Switch>
     </ThemeProvider>
   )

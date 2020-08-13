@@ -26,8 +26,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import DateFnsUtils from '@date-io/date-fns';
 import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
 } from '@material-ui/pickers';
 
 const useStyles = makeStyles({
@@ -66,7 +66,7 @@ export default function Task(props) {
         TaskDataService.get(props.id)
             .then(res => {
                 var dueDate;
-                if(res.data.dueDate === null) {
+                if (res.data.dueDate === null) {
                     dueDate = null;
                 } else {
                     dueDate = formatDate(new Date(res.data.dueDate));
@@ -79,7 +79,6 @@ export default function Task(props) {
                     completed: res.data.completed
                 });
                 setChecked(res.data.completed);
-                console.log(res.data);
             })
             .catch(e => {
                 console.log(e);
@@ -112,22 +111,22 @@ export default function Task(props) {
     dayAfterTomorrowDate.setDate(tomorrowDate.getDate() + 1);
     var today = formatDate(todayDate);
     var tomorrow = formatDate(tomorrowDate);
-    
+
     // Calculate Due Date Labels
     const DueDateChip = () => {
-        if(task.dueDate === null) {
+        if (task.dueDate === null) {
             return <div></div>;
         } else if (task.dueDate === today) {
-            return <Chip label="Today" variant="outlined" style={{color:'#ED6A5A', borderColor:'#ED6A5A'}} />;
+            return <Chip label="Today" variant="outlined" style={{ color: '#ED6A5A', borderColor: '#ED6A5A' }} />;
         } else if (task.dueDate === tomorrow) {
-            return <Chip label="Tomorrow" variant="outlined" style={{color:'#7D1538', borderColor:'#7D1538'}} />;
+            return <Chip label="Tomorrow" variant="outlined" style={{ color: '#7D1538', borderColor: '#7D1538' }} />;
         } else {
-            return <Chip label={task.dueDate} variant="outlined" style={{color:'#084C61', borderColor:'#084C61'}} />;
+            return <Chip label={task.dueDate} variant="outlined" style={{ color: '#084C61', borderColor: '#084C61' }} />;
         }
     }
 
     const DueDate = () => {
-        if(task.dueDate === undefined || task.dueDate === null) {
+        if (task.dueDate === undefined || task.dueDate === null) {
             return <div></div>;
         } else {
             return (
@@ -138,9 +137,9 @@ export default function Task(props) {
             );
         }
     }
- 
+
     const Description = () => {
-        if(task.description === undefined || task.description.length === 0) {
+        if (task.description === undefined || task.description.length === 0) {
             return <div></div>;
         } else {
             return (
@@ -168,7 +167,7 @@ export default function Task(props) {
         handleMenuClose();
         handleViewClose();
     }
-    
+
     const handleDelete = () => {
         TaskDataService.remove(task._id)
             .then(res => {
@@ -192,9 +191,9 @@ export default function Task(props) {
     }
 
     const handleToggleButtons = (event, value) => {
-        if(event.target.name !== 'custom' && showDatePicker === true) setShowDatePicker(false);
+        if (event.target.name !== 'custom' && showDatePicker === true) setShowDatePicker(false);
 
-        if(typeof value !== "string") {
+        if (typeof value !== "string") {
             var newDate = formatDate(selectedDate);
             setTask({ ...task, dueDate: newDate });
         } else {
@@ -210,7 +209,7 @@ export default function Task(props) {
         var newDate = formatDate(date);
         setTask({ ...task, dueDate: newDate });
         setSelectedDate(date);
-    };    
+    };
 
     const updateCompleted = status => {
         var data = {
@@ -271,7 +270,7 @@ export default function Task(props) {
                     />
                 </ListItemIcon>
                 <div className="task-click-space" onClick={viewTask}>
-                     <ListItemText id={task._id} primary={task.title} />
+                    <ListItemText id={task._id} primary={task.title} />
                 </div>
                 <DueDateChip />
             </ListItem>
@@ -286,7 +285,7 @@ export default function Task(props) {
                         </IconButton>
                     </DialogTitle>
                 </div>
-                
+
                 <DialogContent>
                     <h1>{task.title}</h1>
 
@@ -302,7 +301,7 @@ export default function Task(props) {
             </Dialog>
 
             <Menu
-                style={{zIndex: 1400}}
+                style={{ zIndex: 1400 }}
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}

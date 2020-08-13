@@ -16,8 +16,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DateFnsUtils from '@date-io/date-fns';
 import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
 } from '@material-ui/pickers';
 
 const useStyles = makeStyles({
@@ -37,7 +37,7 @@ export default function AddTask(props) {
     const formatDate = date => {
         return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     }
-    
+
     // Add Task
     const initialTaskState = {
         _id: null,
@@ -47,7 +47,7 @@ export default function AddTask(props) {
         completed: false
     };
     const [task, setTask] = useState(initialTaskState);
-    
+
     // Due Date vars
     var todayDate = new Date();
     var tomorrowDate = new Date();
@@ -64,9 +64,9 @@ export default function AddTask(props) {
     }
 
     const handleToggleButtons = (event, value) => {
-        if(event.target.name !== 'custom' && showDatePicker === true) setShowDatePicker(false);
-        
-        if(event.target.name === 'custom') {
+        if (event.target.name !== 'custom' && showDatePicker === true) setShowDatePicker(false);
+
+        if (event.target.name === 'custom') {
             setTask({ ...task, dueDate: selectedDate });
         } else {
             setTask({ ...task, dueDate: value });
@@ -112,7 +112,7 @@ export default function AddTask(props) {
         setOpen(false);
     };
 
-    return ( 
+    return (
         <div>
             <div className="fab-container">
                 <Fab className={classes.primary} aria-label="add" onClick={handleClickOpen}>
@@ -123,50 +123,50 @@ export default function AddTask(props) {
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Add Task</DialogTitle>
                 <DialogContent>
-                <TextField
-                    className={classes.primaryColor} 
-                    autoFocus
-                    margin="dense"
-                    id="title"
-                    label="Title of task"
-                    type="title"
-                    fullWidth
-                    name="title"
-                    value={task.title}
-                    onChange={handleInputChange}
-                />
-                {/* <Chip label="Add tag" onClick={handleClick} /> */}
-                <DialogContentText className={classes.headings}>DUE DATE</DialogContentText>
-                
-                <ToggleButtonGroup className={classes.primaryColor} name="dueDate" value={task.dueDate} onChange={handleToggleButtons} exclusive size="small" aria-label="text dueDate">
-                    <ToggleButton value={today}>Today</ToggleButton>
-                    <ToggleButton value={tomorrow}>Tomorrow</ToggleButton>
-                    <ToggleButton onClick={toggleDatePicker} name="custom" value={selectedDate}>Custom</ToggleButton>
-                </ToggleButtonGroup>
+                    <TextField
+                        className={classes.primaryColor}
+                        autoFocus
+                        margin="dense"
+                        id="title"
+                        label="Title of task"
+                        type="title"
+                        fullWidth
+                        name="title"
+                        value={task.title}
+                        onChange={handleInputChange}
+                    />
+                    {/* <Chip label="Add tag" onClick={handleClick} /> */}
+                    <DialogContentText className={classes.headings}>DUE DATE</DialogContentText>
 
-                {showDatePicker ? (
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
-                            format="MM/dd/yyyy"
-                            margin="normal"
-                            id="date-picker"
-                            label="Select Due Date"
-                            value={selectedDate}
-                            onChange={handleDateChange}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                            }}
-                        />
-                    </MuiPickersUtilsProvider>
-                ) : null}
-  
+                    <ToggleButtonGroup className={classes.primaryColor} name="dueDate" value={task.dueDate} onChange={handleToggleButtons} exclusive size="small" aria-label="text dueDate">
+                        <ToggleButton value={today}>Today</ToggleButton>
+                        <ToggleButton value={tomorrow}>Tomorrow</ToggleButton>
+                        <ToggleButton onClick={toggleDatePicker} name="custom" value={selectedDate}>Custom</ToggleButton>
+                    </ToggleButtonGroup>
+
+                    {showDatePicker ? (
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                                format="MM/dd/yyyy"
+                                margin="normal"
+                                id="date-picker"
+                                label="Select Due Date"
+                                value={selectedDate}
+                                onChange={handleDateChange}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                            />
+                        </MuiPickersUtilsProvider>
+                    ) : null}
+
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                    Cancel
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
                 </Button>
-                <Button onClick={saveTask} color="primary">
-                    Save
+                    <Button onClick={saveTask} color="primary">
+                        Save
                 </Button>
                 </DialogActions>
             </Dialog>

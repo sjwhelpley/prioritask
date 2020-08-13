@@ -10,8 +10,9 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
-//import Dialog from '@material-ui/core/Dialog';
-//import DialogActions from '@material-ui/core/DialogActions';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
@@ -21,6 +22,9 @@ const useStyles = makeStyles({
     headings: {
         marginTop: '10px',
         marginBottom: 0,
+    },
+    editField: {
+        margin: '0 20px',
     },
 });
 
@@ -56,41 +60,55 @@ export default function AddSubTasks(props) {
         setSubTaskTitle(event.target.value);
     }
 
-    // const editSubTask = (id) => {
-    //     let subTasksArr = [...subTasks];
-    //     let index = subTasksArr.findIndex(elem => elem._id === id);
-    //     subTasksArr[index].title = subTaskTitle;
-    //     let subTaskElem = subTasksArr[index];
-    //     setSubTasks(subTasksArr);
+    const [viewDeleteMessage, setViewDeleteMessage] = useState(false);
+    const [viewEditMessage, setViewEditMessage] = useState(false);
+    const [subTaskId, setSubTaskId] = useState('');
 
-    //     updateSubTask(id, subTaskElem);
-    // };
+    const handleDeleteSubTask = (id) => {
+        setViewDeleteMessage(true);
+        setSubTaskId(id);
+    }
 
-    // const [viewDeleteMessage, setViewDeleteMessage] = useState(false);
-    // const [subTaskId, setSubTaskId] = useState('');
+    const handleDeleteMessageClose = () => {
+        setViewDeleteMessage(false);
+    }
 
-    // const handleSubTaskDelete = (id) => {
-    //     setViewDeleteMessage(true);
-    //     setSubTaskId(id);
-    // }
+    const handleEditSubTask = (id) => {
+        setViewEditMessage(true);
+        setSubTaskId(id);
+    }
 
-    // const handleDeleteMessageClose = () => {
-    //     setViewDeleteMessage(false);
-    // }
+    const handleEditMessageClose = () => {
+        setViewEditMessage(false);
+    }
 
-    // const deleteSubTask = () => {
-    //     SubTaskDataService.remove(subTaskId)
-    //         .then(res => {
-    //             console.log(res.data);
-    //         })
-    //         .catch(e => {
-    //             console.log(e);
-    //         });
-    // };
+    const deleteSubTask = () => {
+        SubTaskDataService.remove(subTaskId)
+            .then(res => {
+                console.log(res.data);
+                handleDeleteMessageClose();
+                fetchSubTasks();
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+
+    const editSubTask = () => {
+        let subTasksArr = [...subTasks];
+        let index = subTasksArr.findIndex(elem => elem._id === subTaskId);
+        subTasksArr[index].title = subTaskTitle;
+        let subTaskElem = subTasksArr[index];
+        setSubTasks(subTasksArr);
+
+        updateSubTask(subTaskId, subTaskElem);
+    };
 
     const updateSubTask = (id, data) => {
         SubTaskDataService.update(id, data)
             .then(res => {
+                setSubTaskTitle('');
+                handleEditMessageClose();
                 console.log(res.data);
             })
             .catch(e => {
@@ -130,10 +148,10 @@ export default function AddSubTasks(props) {
             </ListItemIcon>
             <ListItemText id={subTask._id} primary={subTask.title} />
             <ListItemSecondaryAction>
-                <IconButton  edge="end" aria-label="edit">
+                <IconButton onClick={() => handleEditSubTask(subTask._id)} edge="end" aria-label="edit">
                     <EditIcon />
                 </IconButton>
-                <IconButton edge="end" aria-label="delete">
+                <IconButton onClick={() => handleDeleteSubTask(subTask._id)} edge="end" aria-label="delete">
                     <DeleteIcon />
                 </IconButton>
             </ListItemSecondaryAction>
@@ -174,8 +192,8 @@ export default function AddSubTasks(props) {
                 </Button>
             </div>
 
-            {/* <Dialog fullWidth={true} open={viewDeleteMessage} onClose={handleDeleteMessageClose} aria-labelledby="subtask-delete-confirmation">
-                <DialogContentText>Are you sure you want to delete?</DialogContentText>
+            <Dialog fullWidth={true} open={viewDeleteMessage} onClose={handleDeleteMessageClose} aria-labelledby="subtask-delete-confirmation">
+                <DialogTitle>Are you sure you want to delete?</DialogTitle>
                 <DialogActions>
                     <Button onClick={deleteSubTask} color="primary">
                         Yes
@@ -184,7 +202,30 @@ export default function AddSubTasks(props) {
                         Cancel
                     </Button>
                 </DialogActions>
-            </Dialog> */}
+            </Dialog>
+
+            <Dialog fullWidth={true} open={viewEditMessage} onClose={handleEditMessageClose} aria-labelledby="subtask-edit-confirmation">
+                <DialogTitle>Edit Subtask</DialogTitle>
+                <TextField
+                    className={classes.editField}
+                    autoFocus
+                    id="title"
+                    label="Title of subtask"
+                    type="title"
+                    name="title"
+                    variant="outlined"
+                    value={subTaskTitle}
+                    onChange={handleSubTaskChange}
+                />
+                <DialogActions>
+                    <Button onClick={editSubTask} color="primary">
+                        Save
+                    </Button>
+                    <Button onClick={handleEditMessageClose} color="primary">
+                        Cancel
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 }

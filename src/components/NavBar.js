@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     primary: {
         backgroundColor: '#577568',
     },
- });
+});
 
 const NavBar = (props) => {
     const classes = useStyles();
@@ -55,13 +55,13 @@ const NavBar = (props) => {
         <div>
             <AppBar className={classes.primary} position="static">
                 <Toolbar>
-                <IconButton edge="start" onClick={toggleDrawer(true)} className="menuButton" color="inherit" aria-label="menu">
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" className="title">
-                    {props.title}
-                </Typography>
-                {/* <IconButton aria-label="search" color="inherit">
+                    <IconButton edge="start" onClick={toggleDrawer(true)} className="menuButton" color="inherit" aria-label="menu">
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" className="title">
+                        {props.title}
+                    </Typography>
+                    {/* <IconButton aria-label="search" color="inherit">
                     <SearchIcon />
                 </IconButton>
                 <IconButton aria-label="display more actions" edge="end" color="inherit" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
@@ -107,13 +107,6 @@ const NavBar = (props) => {
                         </div>
                         <List>
                             <Link className="list-link" to="/">
-                                <ListItem button key='All Tasks'>
-                                    <ListItemIcon> <MailIcon /> </ListItemIcon>
-                                    <ListItemText primary='All Tasks' />
-                                </ListItem>
-                            </Link>
-            
-                            <Link className="list-link" to="/today">
                                 <ListItem button key='Today'>
                                     <ListItemIcon> <MailIcon /> </ListItemIcon>
                                     <ListItemText primary='Today' />
@@ -127,6 +120,13 @@ const NavBar = (props) => {
                                 </ListItem>
                             </Link>
                             
+                            <Link className="list-link" to="/all">
+                                <ListItem button key='All Tasks'>
+                                    <ListItemIcon> <MailIcon /> </ListItemIcon>
+                                    <ListItemText primary='All Tasks' />
+                                </ListItem>
+                            </Link>
+
                             {/* <ListItem button key='Tags'>
                                 <ListItemIcon> <MailIcon /> </ListItemIcon>
                                 <ListItemText primary='Tags' />
