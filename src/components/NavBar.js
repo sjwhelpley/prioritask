@@ -18,7 +18,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import ArchiveIcon from '@material-ui/icons/Archive';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -108,21 +110,21 @@ const NavBar = (props) => {
                         <List>
                             <Link className="list-link" to="/">
                                 <ListItem button key='Today'>
-                                    <ListItemIcon> <MailIcon /> </ListItemIcon>
+                                    <ListItemIcon> <DraftsIcon /> </ListItemIcon>
                                     <ListItemText primary='Today' />
                                 </ListItem>
                             </Link>
 
                             <Link className="list-link" to="/upcoming">
                                 <ListItem button key='Upcoming'>
-                                    <ListItemIcon> <MailIcon /> </ListItemIcon>
+                                    <ListItemIcon> <CalendarTodayIcon /> </ListItemIcon>
                                     <ListItemText primary='Upcoming' />
                                 </ListItem>
                             </Link>
                             
                             <Link className="list-link" to="/all">
                                 <ListItem button key='All Tasks'>
-                                    <ListItemIcon> <MailIcon /> </ListItemIcon>
+                                    <ListItemIcon> <ArchiveIcon /> </ListItemIcon>
                                     <ListItemText primary='All Tasks' />
                                 </ListItem>
                             </Link>
