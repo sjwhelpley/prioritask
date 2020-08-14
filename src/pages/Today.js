@@ -27,6 +27,7 @@ export default function Today() {
             .then(res => {
                 if (mounted) {
                     setTasks(res.data);
+                    console.log(res.data);
                 }
             })
             .catch(e => {
@@ -55,7 +56,7 @@ export default function Today() {
             });
     };
 
-    const activeTasks = tasks.filter(task => {
+    const activeTasks = tasks.filter(task => {   
         return task.completed === false;
     });
 
