@@ -27,12 +27,14 @@ export default function Today() {
             .then(res => {
                 if (mounted) {
                     setTasks(res.data);
-                    console.log(res.data);
+                    //console.log(res.data);
                 }
             })
             .catch(e => {
                 console.log(e);
             });
+
+        return () => mounted = false;
     });
 
     const refreshTasks = () => {
@@ -56,7 +58,7 @@ export default function Today() {
             });
     };
 
-    const activeTasks = tasks.filter(task => {   
+    const activeTasks = tasks.filter(task => {  
         return task.completed === false;
     });
 
@@ -70,18 +72,22 @@ export default function Today() {
         </div>
     ));
 
+    // const TaskView = () => {
+    //     if(taskList.length === 0) {
+    //         return <div className={classes.empty}>
+    //             <Typography align="center" variant="h4" color="primary">Add some tasks due today</Typography>
+    //         </div>;
+    //     } else {
+    //         return <List> {taskList} </List>;
+    //     }
+    // };
+
     return (
         <div className="container">
             <NavBar title="Today" />
             <AddTask refreshTasks={refreshTasks} />
-            { taskList.length === 0 &&
-                <div className={classes.empty}>
-                    <Typography align="center" variant="h4" color="primary">Add some tasks due today</Typography>
-                </div>
-            }
-            <List>
-                {taskList}
-            </List>
+            {/* <TaskView /> */}
+            <List> {taskList} </List>
         </div>
     )
 }

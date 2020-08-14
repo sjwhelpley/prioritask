@@ -20,7 +20,10 @@ export default function AllTasks() {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        retrieveTasks();
+        let mounted = true;
+        if(mounted) retrieveTasks();
+
+        return () => mounted = false;
     });
 
     const refreshTasks = () => {

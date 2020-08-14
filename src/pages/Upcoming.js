@@ -32,6 +32,7 @@ export default function Upcoming() {
             .catch(e => {
                 console.log(e);
             });
+        return () => mounted = false;
     });
 
     const refreshTasks = () => {
