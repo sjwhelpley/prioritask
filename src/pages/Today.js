@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+//import { makeStyles } from '@material-ui/core/styles';
 import TaskDataService from '../services/TaskService';
 
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import NavBar from '../components/NavBar';
 import AddTask from '../components/AddTask';
 import Task from '../components/Task';
 
-const useStyles = makeStyles({
-    empty: {
-        marginTop: '25%',
-    },
-});
+// const useStyles = makeStyles({
+//     empty: {
+//         marginTop: '25%',
+//     },
+// });
 
 export default function Today() {
-    const classes = useStyles();
+    //const classes = useStyles();
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
