@@ -3,7 +3,7 @@ import TaskDataService from '../services/TaskService';
 
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-//import Typography from '@material-ui/core/Typography';
+import Typography from '@material-ui/core/Typography'
 import NavBar from '../components/NavBar';
 import AddTask from '../components/AddTask';
 import Task from '../components/Task';
@@ -12,20 +12,7 @@ export default function Today() {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        let mounted = true;
-        var today = formatTodayDate();
-
-        TaskDataService.getDueToday(today)
-            .then(res => {
-                if (mounted) {
-                    setTasks(res.data);
-                }
-            })
-            .catch(e => {
-                console.log(e);
-            });
-
-        return () => mounted = false;
+        retrieveTasks();
     });
 
     const refreshTasks = () => {
@@ -63,22 +50,21 @@ export default function Today() {
         </div>
     ));
 
-    // const TaskView = () => {
-    //     if(taskList.length === 0) {
-    //         return <div className={classes.empty}>
-    //             <Typography align="center" variant="h4" color="primary">Add some tasks due today</Typography>
-    //         </div>;
-    //     } else {
-    //         return <List> {taskList} </List>;
-    //     }
-    // };
+    const TaskView = () => {
+        if(taskList.length === 0) {
+            return <div className={classes.empty}>
+                <Typography align="center" variant="h4" color="primary">Add some tasks due today</Typography>
+            </div>;
+        } else {
+            return <List> {taskList} </List>;
+        }
+    };
 
     return (
         <div className="container">
             <NavBar title="Today" />
             <AddTask refreshTasks={refreshTasks} />
-            {/* <TaskView /> */}
-            <List> {taskList} </List>
+            <TaskView />
         </div>
     )
 }

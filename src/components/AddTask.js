@@ -116,7 +116,7 @@ export default function AddTask(props) {
         <div>
             <div className="fab-container">
                 <Fab className={classes.primary} aria-label="add" onClick={handleClickOpen}>
-                    <AddIcon />
+                    <AddIcon style={{ color: 'white'}} />
                 </Fab>
             </div>
 
@@ -135,7 +135,7 @@ export default function AddTask(props) {
                         value={task.title}
                         onChange={handleInputChange}
                     />
-                    {/* <Chip label="Add tag" onClick={handleClick} /> */}
+                    
                     <DialogContentText className={classes.headings}>DUE DATE</DialogContentText>
 
                     <ToggleButtonGroup className={classes.primaryColor} name="dueDate" value={task.dueDate} onChange={handleToggleButtons} exclusive size="small" aria-label="text dueDate">
