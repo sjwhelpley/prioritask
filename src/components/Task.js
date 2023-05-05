@@ -29,6 +29,7 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import moment from 'moment';
 
 const useStyles = makeStyles({
     menuIcon: {
@@ -132,7 +133,7 @@ export default function Task(props) {
             return (
                 <div>
                     <DialogContentText className={classes.headings}>DUE DATE</DialogContentText>
-                    <p>{task.dueDate}</p>
+                    <p>{moment(new Date(task.dueDate)).format("MM DD YYYY")}</p>
                 </div>
             );
         }
@@ -279,7 +280,7 @@ export default function Task(props) {
             <Dialog fullWidth={true} open={viewOpen} onClose={handleViewClose} aria-labelledby="form-dialog-title">
                 <div className="inline">
                     <DialogTitle id="form-dialog-title">
-                        View Task
+                        {task.title}
                         <IconButton className={classes.menuIcon} aria-label="display more actions" color="inherit" aria-controls="simple-menu" aria-haspopup="true" onClick={handleMenuClick}>
                             <MoreIcon />
                         </IconButton>
@@ -287,8 +288,6 @@ export default function Task(props) {
                 </div>
 
                 <DialogContent>
-                    <h1>{task.title}</h1>
-
                     <DueDate />
                     <ViewSubTasks taskId={props.id} />
                     <Description />

@@ -63,12 +63,6 @@ const NavBar = (props) => {
                     <Typography variant="h6" className="title">
                         {props.title}
                     </Typography>
-                    {/* <IconButton aria-label="search" color="inherit">
-                    <SearchIcon />
-                </IconButton>
-                <IconButton aria-label="display more actions" edge="end" color="inherit" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                    <MoreIcon />
-                </IconButton> */}
                 </Toolbar>
             </AppBar>
 
@@ -97,12 +91,14 @@ const NavBar = (props) => {
                     open={state}
                     onClose={toggleDrawer(false)}
                     onOpen={toggleDrawer(true)}
+                    PaperProps={{ style: { width: '50%', maxWidth: '400px' } }}
                 >
                     <div
                         className="list"
                         role="presentation"
                         onClick={toggleDrawer(false)}
                         onKeyDown={toggleDrawer(false)}
+                        style={{ width: '100%' }}
                     >
                         <div className="drawer-header">
                             <img id="logo" src={logo} alt="background" />
@@ -121,26 +117,14 @@ const NavBar = (props) => {
                                     <ListItemText primary='Upcoming' />
                                 </ListItem>
                             </Link>
-                            
+
                             <Link className="list-link" to="/all">
                                 <ListItem button key='All Tasks'>
                                     <ListItemIcon> <ArchiveIcon /> </ListItemIcon>
                                     <ListItemText primary='All Tasks' />
                                 </ListItem>
                             </Link>
-
-                            {/* <ListItem button key='Tags'>
-                                <ListItemIcon> <MailIcon /> </ListItemIcon>
-                                <ListItemText primary='Tags' />
-                            </ListItem> */}
                         </List>
-                        {/* <Divider></Divider>
-                        <List>
-                            <ListItem button key='Settings'>
-                                <ListItemIcon> <MailIcon /> </ListItemIcon>
-                                <ListItemText primary='Settings' />
-                            </ListItem>
-                        </List> */}
                     </div>
                 </SwipeableDrawer>
             </React.Fragment>

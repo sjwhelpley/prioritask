@@ -70,9 +70,9 @@ export default function ViewSubTasks(props) {
             });
     };
 
-    return ( 
+    return (
         <div>
-            { subTasks.length === 0 ? (
+            {subTasks.length === 0 ? (
                 <div></div>
             ) : (
                 <div>
