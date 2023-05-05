@@ -36,7 +36,7 @@ const removeAll = () => {
     return http.delete(`/tasks`);
 };
 
-export default {
+const functions = {
     getAll,
     get,
     getDueToday,
@@ -47,3 +47,5 @@ export default {
     remove,
     removeAll
 };
+
+export default functions;

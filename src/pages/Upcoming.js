@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import TaskDataService from '../services/TaskService';
 
 import List from '@material-ui/core/List';
@@ -9,14 +8,7 @@ import Task from '../components/Task';
 import Layout from '../components/Layout';
 import { Grid } from '@material-ui/core';
 
-const useStyles = makeStyles({
-    empty: {
-        marginTop: '25%',
-    },
-});
-
 export default function Upcoming() {
-    const classes = useStyles();
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
