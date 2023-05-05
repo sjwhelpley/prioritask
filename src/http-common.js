@@ -1,8 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "https://prioritaskapi-v2.herokuapp.com/api",
-  //baseURL: "http://localhost:8080/api",
+  baseURL: process.env.API_URL,
   headers: {
     "Content-type": "application/json"
   }
