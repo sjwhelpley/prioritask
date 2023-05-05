@@ -5,9 +5,9 @@ import TaskDataService from '../services/TaskService';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-import NavBar from '../components/NavBar';
-import AddTask from '../components/AddTask';
 import Task from '../components/Task';
+import Layout from '../components/Layout';
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({
     empty: {
@@ -20,20 +20,8 @@ export default function Upcoming() {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        let mounted = true;
-        var tomorrow = formatTomorrowDate();
-
-        TaskDataService.getDueUpcoming(tomorrow)
-            .then(res => {
-                if(mounted) {
-                    setTasks(res.data);
-                }
-            })
-            .catch(e => {
-                console.log(e);
-            });
-        return () => mounted = false;
-    });
+        retrieveTasks()
+    }, []);
 
     const refreshTasks = () => {
         retrieveTasks();
@@ -43,7 +31,7 @@ export default function Upcoming() {
         var date = new Date();
         date.setDate(date.getDate() + 1);
         return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-      }
+    }
 
     const retrieveTasks = () => {
         var tomorrow = formatTomorrowDate();
@@ -60,8 +48,8 @@ export default function Upcoming() {
     const activeTasks = tasks.filter(task => {
         return task.completed === false;
     });
-    
-    const taskList = activeTasks.map(task => (
+
+    const taskList = activeTasks.map(task =>
         <div key={task._id}>
             <Task
                 id={task._id}
@@ -69,21 +57,19 @@ export default function Upcoming() {
             />
             <Divider />
         </div>
-      )
     );
 
     return (
-        <div className="container">
-            <NavBar title="Upcoming" />
-            <AddTask refreshTasks={refreshTasks} />
-            { taskList.length === 0 &&
-                <div className={classes.empty}>
+        <Layout title="Upcoming" refreshTasks={refreshTasks}>
+            {taskList.length === 0 &&
+                <Grid container alignItems="center" justify="center" style={{ height: '100vh' }}>
                     <Typography align="center" variant="h4" color="primary">Add some tasks due soon</Typography>
-                </div>
+                </Grid>
             }
             <List>
-                {taskList}  
+                {taskList}
             </List>
-        </div>
+        </Layout>
+
     )
 }

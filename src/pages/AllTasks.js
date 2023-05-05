@@ -5,9 +5,9 @@ import TaskDataService from '../services/TaskService';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-import NavBar from '../components/NavBar';
-import AddTask from '../components/AddTask';
 import Task from '../components/Task';
+import Layout from '../components/Layout';
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({
     headings: {
@@ -20,11 +20,8 @@ export default function AllTasks() {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        let mounted = true;
-        if(mounted) retrieveTasks();
-
-        return () => mounted = false;
-    });
+        retrieveTasks()
+    }, []);
 
     const refreshTasks = () => {
         retrieveTasks();
@@ -53,7 +50,7 @@ export default function AllTasks() {
             />
             <Divider />
         </div>
-      )
+    )
     );
 
     const completedTasks = tasks.filter(task => {
@@ -69,20 +66,21 @@ export default function AllTasks() {
             />
             <Divider />
         </div>
-      )
+    )
     );
 
     return (
-        <div className="container">
-            <NavBar title="All Tasks" />
-            <AddTask refreshTasks={refreshTasks} />
-            <List>
-                {uncompletedTaskList}  
-            </List>
-            <Typography className={classes.headings} variant="h6" color="primary">Completed Tasks</Typography>
-            <List>
-                {completedTaskList}  
-            </List>
-        </div>
+        <Layout title="All Tasks" refreshTasks={refreshTasks}>
+            {tasks.length === 0 ? <Grid container alignItems="center" justify="center" style={{ height: '100vh' }}>
+                <Typography>Add some tasks!</Typography></Grid> : <>
+                <List>
+                    {uncompletedTaskList}
+                </List>
+                <Typography className={classes.headings} variant="h6" color="primary">Completed Tasks</Typography>
+                <List>
+                    {completedTaskList}
+                </List>
+            </>}
+        </Layout>
     )
 }

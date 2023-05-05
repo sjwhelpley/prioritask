@@ -4,16 +4,16 @@ import TaskDataService from '../services/TaskService';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography'
-import NavBar from '../components/NavBar';
-import AddTask from '../components/AddTask';
 import Task from '../components/Task';
+import Layout from '../components/Layout';
+import { Grid } from '@material-ui/core';
 
 export default function Today() {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
         retrieveTasks();
-    });
+    }, []);
 
     const refreshTasks = () => {
         retrieveTasks();
@@ -36,7 +36,7 @@ export default function Today() {
             });
     };
 
-    const activeTasks = tasks ? tasks.filter(task => {  
+    const activeTasks = tasks ? tasks.filter(task => {
         return task.completed === false;
     }) : []
 
@@ -51,20 +51,18 @@ export default function Today() {
     ));
 
     const TaskView = () => {
-        if(taskList.length === 0) {
-            return <div className={classes.empty}>
+        if (taskList.length === 0) {
+            return <Grid container alignItems="center" justify="center" style={{ height: '100vh', width: '100%' }}>
                 <Typography align="center" variant="h4" color="primary">Add some tasks due today</Typography>
-            </div>;
+            </Grid>;
         } else {
             return <List> {taskList} </List>;
         }
     };
 
     return (
-        <div className="container">
-            <NavBar title="Today" />
-            <AddTask refreshTasks={refreshTasks} />
+        <Layout title="Today" refreshTasks={refreshTasks}>
             <TaskView />
-        </div>
+        </Layout>
     )
 }

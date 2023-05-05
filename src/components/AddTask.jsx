@@ -19,6 +19,8 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import moment from 'moment';
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({
     headings: {
@@ -30,12 +32,16 @@ const useStyles = makeStyles({
     primaryColor: {
         color: '#577568',
     },
+    saveButton: {
+        backgroundColor: '#577568',
+        color: 'white',
+    }
 });
 
 export default function AddTask(props) {
     const classes = useStyles();
     const formatDate = date => {
-        return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        return moment(date).format("YYYY-MM-DD")
     }
 
     // Add Task
@@ -116,7 +122,7 @@ export default function AddTask(props) {
         <div>
             <div className="fab-container">
                 <Fab className={classes.primary} aria-label="add" onClick={handleClickOpen}>
-                    <AddIcon style={{ color: 'white'}} />
+                    <AddIcon style={{ color: 'white' }} />
                 </Fab>
             </div>
 
@@ -135,7 +141,7 @@ export default function AddTask(props) {
                         value={task.title}
                         onChange={handleInputChange}
                     />
-                    
+
                     <DialogContentText className={classes.headings}>DUE DATE</DialogContentText>
 
                     <ToggleButtonGroup className={classes.primaryColor} name="dueDate" value={task.dueDate} onChange={handleToggleButtons} exclusive size="small" aria-label="text dueDate">
@@ -144,30 +150,32 @@ export default function AddTask(props) {
                         <ToggleButton onClick={toggleDatePicker} name="custom" value={selectedDate}>Custom</ToggleButton>
                     </ToggleButtonGroup>
 
-                    {showDatePicker ? (
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <KeyboardDatePicker
-                                format="MM/dd/yyyy"
-                                margin="normal"
-                                id="date-picker"
-                                label="Select Due Date"
-                                value={selectedDate}
-                                onChange={handleDateChange}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }}
-                            />
-                        </MuiPickersUtilsProvider>
-                    ) : null}
+                    <Grid>
+                        {showDatePicker ? (
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <KeyboardDatePicker
+                                    format="MM/dd/yyyy"
+                                    margin="normal"
+                                    id="date-picker"
+                                    label="Select Due Date"
+                                    value={selectedDate}
+                                    onChange={handleDateChange}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                />
+                            </MuiPickersUtilsProvider>
+                        ) : null}
+                    </Grid>
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Cancel
-                </Button>
-                    <Button onClick={saveTask} color="primary">
+                    <Button onClick={saveTask} variant="contained" className={classes.saveButton}>
                         Save
-                </Button>
+                    </Button>
+                    <Button onClick={handleClose} variant="text">
+                        Cancel
+                    </Button>
                 </DialogActions>
             </Dialog>
         </div>
